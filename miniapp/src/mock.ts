@@ -56,22 +56,22 @@ export const MOCK: Record<string, unknown> = {
       { id: "c2", course: "Programming", kind: "lab", title: "Loops", start: "10:00", end: "11:40", room: "R102" },
     ],
     habits: [
-      { id: "h1", title: "Спорт", note: null, done: false, due: true, streak: 0 },
-      { id: "h2", title: "Позвонить домой", note: null, done: true, due: false, streak: 4 },
+      { id: "h1", title: "Sport", note: null, done: false, due: true, streak: 0 },
+      { id: "h2", title: "Call home", note: null, done: true, due: false, streak: 4 },
     ],
     study: [
       { id: "a1", kind: "assignment", course: "Programming", title: "Lab 3", date: day(1), note: null },
       { id: "e1", kind: "exam", course: "Statistics", title: "Quiz 2", date: day(4), note: "quiz" },
     ],
     milestones: [{ id: "m1", title: "First screen", project: "Side project", date: day(6) }],
-    debts: [{ id: "d1", title: "40 отжиманий до 20:00" }],
+    debts: [{ id: "d1", title: "40 push-ups before 20:00" }],
     rewards: [],
     spending: {
       totals: [{ currency: "CNY", amount: 53 }, { currency: "KZT", amount: 1500 }],
       items: [
-        { id: "t1", note: "обед", category: "Кафе", amount: 35, currency: "CNY", time: "12:40" },
-        { id: "t2", note: "такси", category: "Транспорт", amount: 18, currency: "CNY", time: "09:10" },
-        { id: "t3", note: "подписка", category: "Подписки", amount: 1500, currency: "KZT", time: "08:02" },
+        { id: "t1", note: "lunch", category: "Кафе", amount: 35, currency: "CNY", time: "12:40" },
+        { id: "t2", note: "taxi", category: "Транспорт", amount: 18, currency: "CNY", time: "09:10" },
+        { id: "t3", note: "subscription", category: "Подписки", amount: 1500, currency: "KZT", time: "08:02" },
       ],
     },
   } satisfies Today,
@@ -123,9 +123,9 @@ MOCK["/finance"] = {
   totalCny: 5825.6,
   categories: cats.map(([id, kind, title]) => ({ id, kind, title })),
   transactions: [
-    { id: "t1", kind: "expense", amount: 35, currency: "CNY", amountCny: 35, amountDisplay: 35, note: "обед", categoryId: "c1", accountId: "a1", date: day(0), time: "12:40" },
-    { id: "t2", kind: "expense", amount: 18, currency: "CNY", amountCny: 18, amountDisplay: 18, note: "такси", categoryId: "c3", accountId: "a1", date: day(0), time: "09:10" },
-    { id: "t3", kind: "expense", amount: 1500, currency: "KZT", amountCny: 22.5, amountDisplay: 22.5, note: "подписка", categoryId: "c5", accountId: "a3", date: day(-1), time: "08:02" },
+    { id: "t1", kind: "expense", amount: 35, currency: "CNY", amountCny: 35, amountDisplay: 35, note: "lunch", categoryId: "c1", accountId: "a1", date: day(0), time: "12:40" },
+    { id: "t2", kind: "expense", amount: 18, currency: "CNY", amountCny: 18, amountDisplay: 18, note: "taxi", categoryId: "c3", accountId: "a1", date: day(0), time: "09:10" },
+    { id: "t3", kind: "expense", amount: 1500, currency: "KZT", amountCny: 22.5, amountDisplay: 22.5, note: "subscription", categoryId: "c5", accountId: "a3", date: day(-1), time: "08:02" },
     { id: "t4", kind: "income", amount: 3000, currency: "CNY", amountCny: 3000, amountDisplay: 3000, note: "family", categoryId: "i1", accountId: "a1", date: day(-2), time: null },
     { id: "t5", kind: "expense", amount: 42, currency: "CNY", amountCny: 42, amountDisplay: 42, note: "snacks and drinks", categoryId: "c2", accountId: "a1", date: day(-2), time: null },
   ],
@@ -141,7 +141,7 @@ MOCK["/budgets"] = [
 ] satisfies BudgetRow[];
 
 MOCK["/subscriptions"] = [
-  { note: "PingAn", amount: 35.9, currency: "CNY", period: "month", count: 6, last: day(-19), next: day(11), perMonth: 35.9, overdue: false },
+  { note: "Gym", amount: 35.9, currency: "CNY", period: "month", count: 6, last: day(-19), next: day(11), perMonth: 35.9, overdue: false },
   { note: "iCloud", amount: 120, currency: "USD", period: "year", count: 3, last: day(-220), next: day(145), perMonth: 10, overdue: false },
   { note: "Spotify", amount: 25, currency: "CNY", period: "month", count: 4, last: day(-98), next: day(-68), perMonth: 25, overdue: true },
 ] satisfies Subscription[];
@@ -259,11 +259,11 @@ MOCK["/habits"] = {
   habits: [
     {
       id: "h1",
-      title: "Зал",
+      title: "Gym",
       kind: "weekly",
       target: 3,
       days: null,
-      note: "штанга, час",
+      note: "barbell, 1 h",
       isHard: true,
       active: true,
       due: true,
@@ -275,11 +275,11 @@ MOCK["/habits"] = {
     },
     {
       id: "h2",
-      title: "Позвонить домой",
+      title: "Call home",
       kind: "interval",
       target: 3,
       days: null,
-      note: "маме",
+      note: "mom",
       isHard: true,
       active: true,
       due: false,
@@ -291,7 +291,7 @@ MOCK["/habits"] = {
     },
     {
       id: "h3",
-      title: "Без телефона за час до сна",
+      title: "No phone an hour before bed",
       kind: "daily",
       target: 1,
       days: null,
@@ -307,7 +307,7 @@ MOCK["/habits"] = {
     },
     {
       id: "h4",
-      title: "Стирка",
+      title: "Laundry",
       kind: "daily",
       target: 1,
       days: [0],
@@ -323,7 +323,7 @@ MOCK["/habits"] = {
     },
     {
       id: "h5",
-      title: "Бег утром",
+      title: "Morning run",
       kind: "daily",
       target: 1,
       days: null,
@@ -351,27 +351,27 @@ MOCK["/food"] = {
   totals: { kcal: 1290, protein: 98, fat: 41, carbs: 140 },
   meals: [
     {
-      id: "m1", time: "08:20", title: "Овсянка с бананом", kcal: 380, protein: 12, fat: 8, carbs: 65, confidence: 0.8,
+      id: "m1", time: "08:20", title: "Oatmeal with banana", kcal: 380, protein: 12, fat: 8, carbs: 65, confidence: 0.8,
       status: "confirmed", source: "photo", corrected: false,
       items: [
-        { name: "овсянка на воде", grams: 250, kcal: 180, p: 6, f: 3, c: 32 },
-        { name: "банан", grams: 120, kcal: 105, p: 1.3, f: 0.4, c: 27 },
+        { name: "oatmeal with water", grams: 250, kcal: 180, p: 6, f: 3, c: 32 },
+        { name: "banana", grams: 120, kcal: 105, p: 1.3, f: 0.4, c: 27 },
         { name: "oil", grams: 10, kcal: 90, p: 0, f: 10, c: 0 },
       ],
     },
     {
-      id: "m2", time: "12:45", title: "Курица с рисом", kcal: 647, protein: 52, fat: 22, carbs: 57, confidence: 0.4,
+      id: "m2", time: "12:45", title: "Chicken with rice", kcal: 647, protein: 52, fat: 22, carbs: 57, confidence: 0.4,
       status: "pending", source: "photo", corrected: false,
       items: [
-        { name: "курица гриль", grams: 180, kcal: 297, p: 47, f: 11, c: 0 },
-        { name: "рис", grams: 200, kcal: 260, p: 5, f: 1, c: 57 },
+        { name: "grilled chicken", grams: 180, kcal: 297, p: 47, f: 11, c: 0 },
+        { name: "rice", grams: 200, kcal: 260, p: 5, f: 1, c: 57 },
         { name: "oil", grams: 10, kcal: 90, p: 0, f: 10, c: 0 },
       ],
     },
     {
-      id: "m3", time: "16:10", title: "Йогурт", kcal: 263, protein: 34, fat: 11, carbs: 18, confidence: 0.9,
+      id: "m3", time: "16:10", title: "Yogurt", kcal: 263, protein: 34, fat: 11, carbs: 18, confidence: 0.9,
       status: "confirmed", source: "text", corrected: true,
-      items: [{ name: "йогурт греческий", grams: 250, kcal: 263, p: 34, f: 11, c: 18 }],
+      items: [{ name: "greek yogurt", grams: 250, kcal: 263, p: 34, f: 11, c: 18 }],
     },
   ],
 } satisfies FoodDay;
@@ -390,8 +390,8 @@ MOCK["/food/history"] = {
 
 MOCK["/dishes"] = {
   dishes: [
-    { key: "рис", name: "Рис", grams: 200, kcal: 260, protein: 5, fat: 1, carbs: 57, uses: 9 },
-    { key: "борщ", name: "Борщ", grams: 300, kcal: 150, protein: 6, fat: 6, carbs: 18, uses: 4 },
-    { key: "йогурт греческий", name: "Йогурт греческий", grams: 250, kcal: 263, protein: 34, fat: 11, carbs: 18, uses: 3 },
+    { key: "rice", name: "Rice", grams: 200, kcal: 260, protein: 5, fat: 1, carbs: 57, uses: 9 },
+    { key: "borscht", name: "Borscht", grams: 300, kcal: 150, protein: 6, fat: 6, carbs: 18, uses: 4 },
+    { key: "greek yogurt", name: "Йогурт греческий", grams: 250, kcal: 263, protein: 34, fat: 11, carbs: 18, uses: 3 },
   ] satisfies Dish[],
 };
