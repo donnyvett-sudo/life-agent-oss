@@ -1,0 +1,26 @@
+# Внешняя проверка живости. Если бот, планировщик или Supabase встанут,
+# бот об этом не напишет — писать будет некому. А упавший workflow GitHub
+# присылает письмом, и поломка видна в тот же день.
+name: health
+
+on:
+  schedule:
+    - cron: "0 */6 * * *"
+  workflow_dispatch:
+
+jobs:
+  check:
+    # Does nothing until you set repo variable SUPABASE_PROJECT_REF and secret HEALTH_TOKEN.
+    if: ${{ vars.SUPABASE_PROJECT_REF != '' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: ping
+        env:
+          TOKEN: ${{ secrets.HEALTH_TOKEN }}
+        run: |
+          body=$(curl -sS --max-time 30 -w '\n%{http_code}' \
+            -H "X-Token: $TOKEN" \
+            https://${{ vars.SUPABASE_PROJECT_REF }}.supabase.co/functions/v1/health)
+          code=$(echo "$body" | tail -n1)
+          echo "$body" | head -n-1
+          [ "$code" = "200" ]

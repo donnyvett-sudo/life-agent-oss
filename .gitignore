@@ -1,0 +1,13 @@
+.env
+.env.*
+!.env.example
+supabase/.temp/
+supabase/.branches/
+imports/
+node_modules/
+dist/
+.DS_Store
+*.log
+*.tsbuildinfo
+.claude/
+.serena/

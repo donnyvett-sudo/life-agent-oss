@@ -1,0 +1,312 @@
+/*
+  Life Coach: «бумага» с приборной структурой.
+  Шрифты: Literata (заголовки), Source Sans 3 (текст), JetBrains Mono (цифры и метки).
+  Один акцент (терракота). Без градиентов, без пилюль: скругление 6–10px.
+*/
+:root,
+:root[data-theme="light"] {
+  --bg: #f6f3ec;
+  --surface: #fffdf8;
+  --line: #e4ddd0;
+  --line-strong: #cfc6b6;
+  --tint: #efe8db;
+  --text: #1f1d1a;
+  --muted: #857d70;
+  --accent: #b0553a;
+  --accent-soft: rgba(176, 85, 58, 0.14);
+  --on-accent: #fffdf8;
+  --ink-btn: #1f1d1a;
+  --on-ink: #fffdf8;
+  --good: #3f7d4e;
+  --warn: #a8661a;
+  --bad: #b8432f;
+  --shadow: 0 1px 0 rgba(31, 29, 26, 0.04);
+  color-scheme: light;
+}
+:root[data-theme="dark"] {
+  --bg: #151411;
+  --surface: #1e1c18;
+  --line: #2f2c26;
+  --line-strong: #454036;
+  --tint: #27241f;
+  --text: #ece6da;
+  --muted: #968d7f;
+  --accent: #d9785a;
+  --accent-soft: rgba(217, 120, 90, 0.16);
+  --on-accent: #151411;
+  --ink-btn: #ece6da;
+  --on-ink: #151411;
+  --good: #82b98d;
+  --warn: #d9a24f;
+  --bad: #e0705a;
+  --shadow: none;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+html, body { margin: 0; background: var(--bg); color: var(--text); }
+body {
+  font: 16px/1.45 "Source Sans 3 Variable", -apple-system, system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -webkit-tap-highlight-color: transparent;
+}
+button, input, select { font: inherit; color: inherit; }
+button { cursor: pointer; }
+svg { flex-shrink: 0; }
+
+.mono { font-family: "JetBrains Mono", ui-monospace, monospace; font-variant-numeric: tabular-nums; }
+.serif { font-family: "Literata Variable", Georgia, serif; }
+.muted { color: var(--muted); }
+.small { font-size: 14px; }
+.good { color: var(--good); }
+.warn { color: var(--warn); }
+.bad { color: var(--bad); }
+
+.screen { padding: 18px 16px calc(88px + env(safe-area-inset-bottom)); max-width: 640px; margin: 0 auto; }
+.center { min-height: 80vh; display: grid; place-items: center; text-align: center; }
+.center-pad { text-align: center; padding: 48px 0; }
+
+/* ------------------------------------------------------------ шапка ---- */
+.head { display: flex; justify-content: space-between; align-items: flex-end; gap: 12px; margin-bottom: 16px; }
+.eyebrow { font-size: 14px; color: var(--muted); }
+h1 { font: 600 30px/1.1 "Literata Variable", Georgia, serif; letter-spacing: -0.01em; margin: 2px 0 0; }
+.counter { text-align: right; }
+.counter b { display: block; font: 700 26px/1 "JetBrains Mono", monospace; }
+.counter span { font: 500 11px "JetBrains Mono", monospace; text-transform: uppercase; letter-spacing: 0.06em; color: var(--accent); }
+
+/* ----------------------------------------------------------- панели ---- */
+.panel { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; margin-bottom: 12px; box-shadow: var(--shadow); }
+.panel-head { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
+.panel-head h2 { font: 600 18px/1.2 "Literata Variable", Georgia, serif; margin: 0; flex: 1; }
+.panel-head svg { color: var(--accent); }
+.meta { font: 500 12px "JetBrains Mono", monospace; letter-spacing: 0.04em; color: var(--muted); text-transform: uppercase; }
+
+.note { display: flex; align-items: center; justify-content: space-between; gap: 12px; background: var(--tint); border-left: 3px solid var(--accent); border-radius: 0 8px 8px 0; padding: 10px 12px; margin-bottom: 12px; }
+.note.good { border-left-color: var(--good); color: inherit; }
+.note-label { font: 500 11px "JetBrains Mono", monospace; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); }
+
+/* ------------------------------------------------------------ цифры ---- */
+.figure { font: 700 40px/1 "JetBrains Mono", monospace; letter-spacing: -0.03em; font-variant-numeric: tabular-nums; }
+.figure .u { font-size: 18px; font-weight: 500; color: var(--muted); margin: 0 8px 0 2px; letter-spacing: 0; }
+.figure.md { font-size: 24px; }
+.figure.md .u { font-size: 14px; margin: 0 5px 0 1px; }
+.meter { height: 6px; background: var(--tint); border-radius: 3px; overflow: hidden; margin: 12px 0 10px; position: relative; }
+.meter i { display: block; height: 100%; background: var(--accent); border-radius: 3px; }
+.kv { display: flex; flex-wrap: wrap; gap: 6px 18px; font-size: 13px; color: var(--muted); }
+.kv b { display: block; color: var(--text); font: 500 14px "JetBrains Mono", monospace; }
+.verdict { display: inline-flex; align-items: center; gap: 5px; font: 600 14px "Source Sans 3 Variable", sans-serif; white-space: nowrap; }
+.remark { margin: 10px 0 0; font-size: 15px; padding-top: 10px; border-top: 1px dashed var(--line); }
+
+/* ----------------------------------------------------------- строки ---- */
+.sub-title { font: 500 11px "JetBrains Mono", monospace; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); margin: 12px 0 2px; }
+.line { display: flex; align-items: center; gap: 12px; min-height: 48px; padding: 6px 0; border-top: 1px solid var(--line); }
+.panel-head + .line, .sub-title + .line { border-top: none; }
+.grow { flex: 1; min-width: 0; }
+.line .hint { font-size: 13px; color: var(--muted); }
+.line .hint.warn { color: var(--warn); }
+.amount { font: 500 15px "JetBrains Mono", monospace; font-variant-numeric: tabular-nums; }
+.line-button { width: 100%; background: none; border: none; border-top: 1px solid var(--line); text-align: left; padding: 6px 0; }
+.panel-head + .line-button { border-top: none; }
+
+/* квадратная отметка */
+.box { width: 26px; height: 26px; border: 1.5px solid var(--line-strong); border-radius: 6px; display: grid; place-items: center; background: none; padding: 0; }
+.box.on { background: var(--ink-btn); border-color: var(--ink-btn); color: var(--on-ink); }
+.box.off { border-color: var(--bad); color: var(--bad); }
+.hit { position: relative; }
+.hit::after { content: ""; position: absolute; inset: -10px; }
+
+/* ----------------------------------------------------------- кнопки ---- */
+.btn { background: var(--ink-btn); color: var(--on-ink); border: none; border-radius: 6px; padding: 9px 14px; font-weight: 600; font-size: 15px; min-height: 40px; }
+.btn.accent { background: var(--accent); color: var(--on-accent); }
+.btn.ghost { background: var(--tint); color: var(--text); }
+.btn.danger { background: none; color: var(--bad); padding-left: 0; }
+.btn.full { width: 100%; margin-top: 10px; }
+.btn:disabled, .icon-btn:disabled, .box:disabled { opacity: 0.45; }
+.icon-btn { background: none; border: none; color: var(--muted); width: 36px; height: 36px; border-radius: 6px; display: grid; place-items: center; padding: 0; }
+.icon-btn:active { background: var(--tint); }
+.link { background: none; border: none; color: var(--accent); padding: 0; font-size: inherit; font-weight: 600; }
+
+.seg { display: inline-flex; border: 1px solid var(--line-strong); border-radius: 7px; overflow: hidden; }
+.seg.wide { display: flex; }
+.seg.wide button { flex: 1; }
+.seg button { background: none; border: none; padding: 7px 12px; font-size: 14px; min-height: 36px; white-space: nowrap; }
+.seg button + button { border-left: 1px solid var(--line-strong); }
+.seg button.on { background: var(--ink-btn); color: var(--on-ink); font-weight: 600; }
+
+/* ----------------------------------------------------------- плитки ---- */
+.tiles { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 12px; }
+.tile { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 10px 12px; }
+.tile .meta { font-size: 10.5px; }
+.tile-value { font: 700 19px/1.2 "JetBrains Mono", monospace; margin-top: 6px; font-variant-numeric: tabular-nums; }
+
+/* ---------------------------------------------------------- графики ---- */
+.chart { width: 100%; height: auto; display: block; overflow: visible; }
+.chart .grid { stroke: var(--line); stroke-width: 1; }
+.chart .target { stroke: var(--muted); stroke-width: 1.25; stroke-dasharray: 4 3; }
+.chart .axis { fill: var(--muted); font: 500 9.5px "JetBrains Mono", monospace; }
+.chart .bar { fill: var(--accent); opacity: 0.5; }
+.chart .bar.active { opacity: 1; }
+.chart .dot { fill: var(--accent); fill-opacity: 0.55; stroke: var(--surface); stroke-width: 2; }
+.chart .dot.active { fill-opacity: 1; }
+.chart .hit-area { cursor: pointer; }
+.chart-note { font-size: 13px; color: var(--muted); margin: 6px 0 0; }
+
+.table { width: 100%; border-collapse: collapse; margin-top: 8px; font-size: 14px; }
+.table th { text-align: left; font: 500 10.5px "JetBrains Mono", monospace; text-transform: uppercase; letter-spacing: 0.05em; color: var(--muted); padding: 4px 6px 6px 0; }
+.table td { padding: 9px 6px 9px 0; border-top: 1px solid var(--line); }
+.table td.mono { font-size: 13px; }
+.table tr { cursor: pointer; }
+
+/* ------------------------------------------------------------- поля ---- */
+.field { display: flex; align-items: center; justify-content: space-between; gap: 12px; min-height: 50px; padding: 6px 0; border-top: 1px solid var(--line); }
+.panel-head + .field, .editor .field:first-child { border-top: none; }
+.field > span:first-child { flex: 1; }
+.field input, .field select { background: var(--tint); border: 1px solid transparent; border-radius: 6px; padding: 7px 10px; min-height: 38px; font-family: "JetBrains Mono", monospace; font-size: 15px; }
+.field input:focus, .field select:focus { outline: none; border-color: var(--accent); }
+.field input:not([type="time"]) { width: 110px; text-align: right; }
+.field input.text { width: 170px; text-align: left; font-family: "Source Sans 3 Variable", sans-serif; font-size: 16px; }
+.field select { font-family: "Source Sans 3 Variable", sans-serif; font-size: 15px; }
+.field-pair { display: flex; gap: 6px; flex-shrink: 0; }
+.editor { border: 1px solid var(--line); background: var(--bg); border-radius: 8px; padding: 2px 12px 12px; margin: 8px 0; }
+.editor-actions { display: flex; gap: 8px; margin-top: 10px; align-items: center; }
+.spacer { flex: 1; }
+.help { font-size: 14px; color: var(--muted); margin: 8px 0 0; }
+
+.savebar { position: sticky; bottom: calc(76px + env(safe-area-inset-bottom)); display: flex; gap: 8px; justify-content: flex-end; align-items: center; padding: 10px 12px; margin-bottom: 12px; background: var(--surface); border: 1px solid var(--line-strong); border-radius: 10px; z-index: 5; }
+.savebar .grow { font-size: 14px; color: var(--muted); }
+
+/* ------------------------------------------------------------ вкладки -- */
+.tabbar { position: fixed; left: 0; right: 0; bottom: 0; display: flex; background: var(--bg); border-top: 1px solid var(--line); padding-bottom: env(safe-area-inset-bottom); z-index: 10; }
+.tab { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 3px; padding: 8px 0 7px; background: none; border: none; color: var(--muted); font-size: 11px; min-height: 56px; position: relative; }
+.tab.active { color: var(--text); font-weight: 600; }
+.tab.active::before { content: ""; position: absolute; top: -1px; left: 30%; right: 30%; height: 2px; background: var(--accent); }
+
+@media (max-width: 360px) {
+  .tiles { grid-template-columns: 1fr 1fr; }
+  .figure { font-size: 34px; }
+}
+
+/* ---------------------------------------------------------- финансы ---- */
+.month-nav { display: flex; align-items: center; justify-content: space-between; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 4px 6px; margin-bottom: 12px; font-size: 15px; }
+.cat-row { display: block; width: 100%; background: none; border: none; border-top: 1px solid var(--line); padding: 9px 0 10px; text-align: left; }
+.panel-head + .cat-row { border-top: none; }
+.cat-row.on .cat-top .grow { font-weight: 700; }
+.cat-row.on .cat-bar i { opacity: 1; }
+.cat-top { display: flex; align-items: baseline; gap: 10px; }
+.share { width: 38px; text-align: right; font-size: 12px; color: var(--muted); }
+.share.bad { color: var(--bad); }
+.cat-bar { display: block; height: 4px; background: var(--tint); border-radius: 2px; margin-top: 6px; overflow: hidden; }
+.cat-bar i { display: block; height: 100%; background: var(--accent); opacity: 0.6; border-radius: 2px; }
+/* Лимит: жёлтый у порога, красный за ним — цвет здесь несёт смысл, а не украшает. */
+.cat-bar i.near { background: var(--warn); opacity: 0.85; }
+.cat-bar i.over { background: var(--bad); opacity: 0.9; }
+/* выбор категории одним касанием: сетка кнопок под операцией */
+.pick { display: grid; grid-template-columns: repeat(auto-fill, minmax(104px, 1fr)); gap: 6px; padding: 8px 0 10px; }
+.pick .btn { font-size: 14px; font-weight: 500; padding: 8px 10px; min-height: 38px; }
+
+.actions { display: flex; gap: 8px; margin: 4px 0 6px; }
+.actions .btn { flex: 1; display: inline-flex; align-items: center; justify-content: center; gap: 6px; padding: 8px 10px; }
+.help.warn { color: var(--warn); }
+.check { width: 22px; height: 22px; accent-color: var(--ink-btn); }
+.field input[type="date"] { width: auto; }
+.panel-head + div > .line-button:first-child { border-top: none; }
+.sub-title + div > .line-button:first-child { border-top: none; }
+.field > select, .field > input.text { max-width: 60%; min-width: 0; text-overflow: ellipsis; }
+.field-pair input { width: 96px; }
+
+/* ------------------------------------------------------------ учёба ---- */
+.line-text { background: none; border: none; padding: 0; text-align: left; min-width: 0; }
+.due { font: 500 12px "JetBrains Mono", monospace; color: var(--muted); white-space: nowrap; text-align: right; }
+.due.warn { color: var(--warn); }
+.due.bad { color: var(--bad); }
+.month-nav.inset { background: var(--bg); margin: 0 0 4px; }
+.nav-center { display: inline-flex; align-items: center; gap: 12px; }
+/* Отступы не для вида, а для пальца: подпись высотой 22 px — слишком мелкая цель. */
+.date-jump { position: relative; display: inline-flex; align-items: center; gap: 6px; padding: 8px 6px; margin: -8px -6px; }
+.date-jump > svg { color: var(--muted); }
+.date-jump input { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; border: none; padding: 0; margin: 0; background: none; -webkit-appearance: none; appearance: none; }
+.date-jump:active > svg { color: var(--accent); }
+.sub-title.today { color: var(--accent); }
+.slot { width: 44px; font-size: 13px; line-height: 1.3; flex-shrink: 0; }
+.line.dim { opacity: 0.5; }
+.row-icon { color: var(--muted); vertical-align: -3px; margin-right: 7px; }
+
+/* «Настроить экран»: пунктир читается как место, куда можно что-то положить */
+.add-panel { display: flex; align-items: center; justify-content: center; gap: 8px; width: 100%; min-height: 48px; margin: 4px 0 8px; padding: 12px; background: none; border: 1.5px dashed var(--line-strong); border-radius: 10px; color: var(--muted); font-size: 15px; font-weight: 600; }
+.add-panel:active { background: var(--tint); }
+.cat-row.static { cursor: default; }
+.cards-row { display: flex; align-items: flex-end; justify-content: space-between; gap: 16px; }
+.boxes { display: flex; gap: 8px; align-items: flex-end; }
+.box-col { display: flex; flex-direction: column; align-items: center; gap: 2px; width: 26px; }
+.box-bar { height: 44px; width: 10px; background: var(--tint); border-radius: 3px; display: flex; align-items: flex-end; overflow: hidden; }
+.box-bar i { display: block; width: 100%; background: var(--accent); border-radius: 3px; }
+.small-num { font-size: 12px; }
+.panel-head + div > .line:first-child { border-top: none; }
+
+/* ------------------------------------------------------------ дело ---- */
+.head-right { display: flex; align-items: center; gap: 10px; }
+.gear { background: none; border: none; color: var(--muted); padding: 6px; margin: -6px -6px -6px 0; border-radius: 8px; }
+.gear:active { background: var(--tint); }
+.gear.back { margin: -6px 0 -6px -8px; color: var(--text); }
+.commits { display: grid; grid-auto-flow: column; grid-template-rows: repeat(7, 1fr); gap: 3px; margin: 4px 0 2px; }
+.commits .cell { aspect-ratio: 1; border-radius: 2px; background: var(--tint); }
+.commits .cell.l1 { background: var(--accent); opacity: 0.3; }
+.commits .cell.l2 { background: var(--accent); opacity: 0.5; }
+.commits .cell.l3 { background: var(--accent); opacity: 0.75; }
+.commits .cell.l4 { background: var(--accent); }
+.proj > div:first-child { font-weight: 600; }
+.line.ms { padding-left: 12px; }
+.link.quiet { color: var(--muted); font-weight: 500; font-size: 14px; padding: 4px 0 8px 12px; }
+.head > div:not(.head-right) { flex: 1; min-width: 0; }
+
+/* ----------------------------------------------------------- образ ---- */
+.strip { display: flex; gap: 4px; flex-shrink: 0; }
+.strip .dot { width: 10px; height: 18px; padding: 0; border: none; border-radius: 3px; background: var(--tint); }
+.strip .dot.on { background: var(--accent); }
+.field.wrap { flex-wrap: wrap; }
+.field.wrap .seg { width: 100%; }
+.field.wrap .seg button { padding: 7px 4px; }
+/* В таблице вердикт компактный, но ширину не фиксируем: «OFF TRACK» длиннее «СРЫВ». */
+.table .verdict { font: 600 12px "JetBrains Mono", monospace; text-transform: uppercase; letter-spacing: 0.04em; }
+.verdict.good { color: var(--good); }
+.verdict.warn { color: var(--warn); }
+.verdict.bad { color: var(--bad); }
+.clip { display: -webkit-box; -webkit-line-clamp: 2; line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.advice { margin: 10px 0 0; white-space: pre-line; }
+
+/* --------------------------------------------------- политика и правила ---- */
+.doc p { margin: 2px 0 12px; line-height: 1.5; }
+.doc p:last-child { margin-bottom: 0; }
+
+/* ------------------------------------------------- поле в несколько строк ---- */
+.field.stack { flex-direction: column; align-items: stretch; gap: 8px; }
+.field.stack > span:first-child { flex: none; }
+.field.stack .text, .field.stack textarea { width: 100%; max-width: none; text-align: left; }
+.field textarea.text {
+  background: var(--tint); border: 1px solid transparent; border-radius: 6px; padding: 9px 10px;
+  font-family: "Source Sans 3 Variable", sans-serif; font-size: 16px; line-height: 1.45; resize: vertical;
+}
+.field textarea.text:focus { outline: none; border-color: var(--accent); }
+
+/* Life Desk (Mac): вкладки живут в боковой панели приложения, контент — колонкой по центру. */
+body.desk .screen { max-width: 680px; margin: 0 auto; padding-bottom: 32px; }
+body.desk .tabbar { display: none; }
+
+/* ------------------------------------------------------------- еда ---- */
+.macro { padding: 9px 0 10px; border-top: 1px solid var(--line); }
+.macro:first-of-type { border-top: none; }
+.item-card { border-top: 1px dashed var(--line); padding: 10px 0 8px; }
+.item-card:first-of-type { border-top: none; padding-top: 4px; }
+.item-card .name { display: flex; gap: 8px; align-items: center; margin-bottom: 8px; }
+.item-card .name input { flex: 1; min-width: 0; background: var(--tint); border: 1px solid transparent; border-radius: 6px; padding: 7px 10px; min-height: 38px; font-size: 16px; }
+.num-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; }
+.num-grid span { display: block; font: 500 10.5px "JetBrains Mono", monospace; text-transform: uppercase; letter-spacing: 0.05em; color: var(--muted); }
+.num-grid input, .item-card .name input.num { width: 100%; margin-top: 3px; background: var(--tint); border: 1px solid transparent; border-radius: 6px; padding: 7px 8px; min-height: 38px; font: 500 14px "JetBrains Mono", monospace; text-align: right; }
+.item-card .name input.num { width: 92px; flex: none; margin: 0; }
+.num-grid input:focus, .item-card .name input:focus { outline: none; border-color: var(--accent); }
+.chips { display: flex; flex-wrap: wrap; gap: 6px; padding: 8px 0 2px; }
+.chips .btn { font-size: 14px; font-weight: 500; padding: 6px 10px; min-height: 34px; }
+.pending-dot { display: inline-block; width: 7px; height: 7px; border-radius: 50%; background: var(--warn); margin-right: 6px; vertical-align: 1px; }
+.chart .bar.over { fill: var(--warn); }
+.chart .avg-line { fill: none; stroke: var(--accent); stroke-width: 2; stroke-linejoin: round; }
+.chart .raw-dot { fill: var(--muted); fill-opacity: 0.6; }

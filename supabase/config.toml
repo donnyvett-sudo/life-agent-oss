@@ -1,0 +1,26 @@
+project_id = "life-coach"
+
+# Все функции проверяют свою авторизацию сами (секрет Telegram, cron-секрет из Vault, initData).
+[functions.telegram-bot]
+verify_jwt = false
+
+[functions.scheduler]
+verify_jwt = false
+
+[functions.sleep-webhook]
+verify_jwt = false
+
+[functions.api]
+verify_jwt = false
+
+[functions.study-sync]
+verify_jwt = false
+
+[functions.quick-entry]
+verify_jwt = false
+
+[functions.health]
+verify_jwt = false
+
+[functions.body-webhook]
+verify_jwt = false

@@ -1,0 +1,234 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>Направления дизайна</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&family=Newsreader:opsz,wght@6..72,500;6..72,600&family=Source+Sans+3:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; padding: 24px; background: #d9d9de; font-family: -apple-system, system-ui, sans-serif; }
+  .row { display: flex; gap: 28px; align-items: flex-start; }
+  .col h3 { font: 600 15px/1.2 -apple-system, system-ui; margin: 0 0 10px 4px; color: #222; }
+  .phone { width: 375px; height: 780px; border-radius: 28px; overflow: hidden; position: relative; box-shadow: 0 10px 30px rgba(0,0,0,.18); }
+  .scroll { height: 100%; overflow: hidden; }
+  svg.i { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; flex-shrink: 0; }
+  .tabs { position: absolute; left: 0; right: 0; bottom: 0; display: flex; }
+  .tab { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 3px; font-size: 10.5px; padding: 8px 0 18px; }
+
+  /* ---------- A. Нативный (Telegram / Apple Health) ---------- */
+  .a { background: #f2f2f7; color: #000; font-family: -apple-system, "SF Pro Text", system-ui, sans-serif; }
+  .a .scroll { padding: 14px 16px 90px; }
+  .a .date { font-size: 13px; color: #8e8e93; font-weight: 500; text-transform: uppercase; letter-spacing: .02em; }
+  .a h1 { font-size: 30px; font-weight: 700; letter-spacing: -.02em; margin: 2px 0 14px; }
+  .a .sec { font-size: 13px; color: #8e8e93; text-transform: uppercase; margin: 18px 12px 6px; }
+  .a .group { background: #fff; border-radius: 12px; overflow: hidden; }
+  .a .item { display: flex; align-items: center; gap: 12px; padding: 11px 14px; min-height: 46px; position: relative; }
+  .a .item + .item::before { content: ""; position: absolute; top: 0; left: 46px; right: 0; border-top: .5px solid #c6c6c8; }
+  .a .ico { width: 30px; height: 30px; border-radius: 7px; display: grid; place-items: center; color: #fff; }
+  .a .ico svg { width: 17px; height: 17px; }
+  .a .grow { flex: 1; min-width: 0; }
+  .a .sub { font-size: 13px; color: #8e8e93; }
+  .a .val { font-size: 34px; font-weight: 700; letter-spacing: -.02em; }
+  .a .val small { font-size: 17px; font-weight: 600; color: #8e8e93; margin: 0 6px 0 2px; }
+  .a .check { width: 26px; height: 26px; border-radius: 50%; border: 1.5px solid #c7c7cc; display: grid; place-items: center; }
+  .a .check.on { background: #34c759; border-color: #34c759; color: #fff; }
+  .a .check.off { background: #ff3b30; border-color: #ff3b30; color: #fff; }
+  .a .check svg { width: 15px; height: 15px; stroke-width: 2.6; }
+  .a .btn { background: #007aff; color: #fff; border: 0; border-radius: 9px; padding: 7px 13px; font-weight: 600; font-size: 15px; }
+  .a .tag { font-size: 13px; font-weight: 600; color: #248a3d; }
+  .a .warn { color: #c93400; }
+  .a .tabs { background: rgba(249,249,249,.94); border-top: .5px solid #c6c6c8; color: #8e8e93; }
+  .a .tab.on { color: #007aff; }
+
+  /* ---------- B. Приборная панель (Oura / Whoop) ---------- */
+  .b { background: #0b0c0e; color: #e8e9ec; font-family: Inter, system-ui, sans-serif; }
+  .b .scroll { padding: 18px 16px 90px; }
+  .b .top { display: flex; justify-content: space-between; align-items: baseline; }
+  .b .date { font-size: 13px; color: #7d828c; }
+  .b h1 { font-size: 22px; font-weight: 600; margin: 2px 0 16px; letter-spacing: -.01em; }
+  .b .streak { font: 500 12px "JetBrains Mono", monospace; color: #f5b942; text-align: right; }
+  .b .streak b { display: block; font-size: 22px; font-weight: 700; color: #e8e9ec; }
+  .b .panel { background: #15171b; border: 1px solid #22252b; border-radius: 10px; padding: 14px; margin-bottom: 10px; }
+  .b .label { font: 500 11px "JetBrains Mono", monospace; letter-spacing: .08em; text-transform: uppercase; color: #7d828c; display: flex; justify-content: space-between; }
+  .b .num { font: 700 44px/1 "JetBrains Mono", monospace; letter-spacing: -.03em; margin: 10px 0 4px; }
+  .b .num span { font-size: 18px; color: #7d828c; margin: 0 8px 0 2px; }
+  .b .meter { height: 6px; background: #22252b; border-radius: 3px; overflow: hidden; margin: 10px 0 6px; }
+  .b .meter i { display: block; height: 100%; background: #f5b942; }
+  .b .kv { display: flex; gap: 16px; font-size: 12px; color: #7d828c; }
+  .b .kv b { color: #e8e9ec; font: 500 13px "JetBrains Mono", monospace; }
+  .b .line { display: flex; align-items: center; gap: 10px; padding: 10px 0; border-top: 1px solid #22252b; }
+  .b .line:first-of-type { border-top: 0; }
+  .b .grow { flex: 1; }
+  .b .dim { color: #7d828c; font-size: 12px; }
+  .b .box { width: 22px; height: 22px; border: 1.5px solid #3a3e46; border-radius: 5px; display: grid; place-items: center; }
+  .b .box.on { background: #f5b942; border-color: #f5b942; color: #0b0c0e; }
+  .b .box.off { border-color: #ff5a4f; color: #ff5a4f; }
+  .b .box svg { width: 14px; height: 14px; stroke-width: 3; }
+  .b .alert { border-color: #5a2a26; background: #1d1211; }
+  .b .btn { background: #e8e9ec; color: #0b0c0e; border: 0; border-radius: 6px; padding: 7px 12px; font-weight: 600; font-size: 13px; }
+  .b .ok { color: #57c785; }
+  .b .amt { font: 500 14px "JetBrains Mono", monospace; }
+  .b .tabs { background: #0b0c0e; border-top: 1px solid #22252b; color: #5d626c; }
+  .b .tab.on { color: #f5b942; }
+
+  /* ---------- C. Бумага (Things / Bear) ---------- */
+  .c { background: #f7f4ee; color: #1f1d1a; font-family: "Source Sans 3", system-ui, sans-serif; }
+  .c .scroll { padding: 22px 22px 90px; }
+  .c .date { font-size: 14px; color: #8a8378; }
+  .c h1 { font: 600 32px/1.1 Newsreader, Georgia, serif; margin: 4px 0 6px; letter-spacing: -.01em; }
+  .c .lead { font-size: 15px; color: #5c564d; margin: 0 0 18px; }
+  .c h2 { font: 600 19px Newsreader, Georgia, serif; margin: 22px 0 6px; display: flex; align-items: center; gap: 8px; }
+  .c h2 svg { width: 18px; height: 18px; color: #b0553a; }
+  .c .rule { border-top: 1px solid #e3ddd2; }
+  .c .ln { display: flex; align-items: center; gap: 12px; padding: 11px 0; border-bottom: 1px solid #e3ddd2; font-size: 16px; }
+  .c .grow { flex: 1; }
+  .c .muted { color: #8a8378; font-size: 14px; }
+  .c .big { font: 600 36px/1 Newsreader, Georgia, serif; }
+  .c .big span { font-size: 18px; color: #8a8378; margin: 0 6px 0 2px; }
+  .c .cb { width: 22px; height: 22px; border: 1.5px solid #bfb6a7; border-radius: 4px; display: grid; place-items: center; }
+  .c .cb.on { background: #1f1d1a; border-color: #1f1d1a; color: #f7f4ee; }
+  .c .cb.off { border-color: #b0553a; color: #b0553a; }
+  .c .cb svg { width: 14px; height: 14px; stroke-width: 3; }
+  .c .note { background: #efe6d6; border-left: 3px solid #b0553a; padding: 10px 12px; font-size: 15px; display: flex; justify-content: space-between; align-items: center; gap: 10px; }
+  .c .btn { background: #1f1d1a; color: #f7f4ee; border: 0; border-radius: 6px; padding: 7px 12px; font-weight: 600; font-size: 14px; }
+  .c .good { color: #3f7d4e; font-size: 14px; font-weight: 600; }
+  .c .warn { color: #b0553a; }
+  .c .tabs { background: #f7f4ee; border-top: 1px solid #e3ddd2; color: #a39b8e; }
+  .c .tab.on { color: #1f1d1a; }
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute">
+  <symbol id="cal" viewBox="0 0 24 24"><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></symbol>
+  <symbol id="moon" viewBox="0 0 24 24"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></symbol>
+  <symbol id="pill" viewBox="0 0 24 24"><path d="m10.5 20.5 10-10a4.95 4.95 0 1 0-7-7l-10 10a4.95 4.95 0 1 0 7 7Z"/><path d="m8.5 8.5 7 7"/></symbol>
+  <symbol id="wallet" viewBox="0 0 24 24"><path d="M19 7V4a1 1 0 0 0-1-1H5a2 2 0 0 0 0 4h15a1 1 0 0 1 1 1v4h-3a2 2 0 0 0 0 4h3a1 1 0 0 0 1-1v-2a1 1 0 0 0-1-1"/><path d="M3 5v14a2 2 0 0 0 2 2h15a1 1 0 0 0 1-1v-4"/></symbol>
+  <symbol id="book" viewBox="0 0 24 24"><path d="M12 7v14"/><path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"/></symbol>
+  <symbol id="sliders" viewBox="0 0 24 24"><path d="M21 4h-7M10 4H3M21 12h-9M8 12H3M21 20h-5M12 20H3M14 2v4M8 10v4M16 18v4"/></symbol>
+  <symbol id="check" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></symbol>
+  <symbol id="x" viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></symbol>
+  <symbol id="alert" viewBox="0 0 24 24"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"/><path d="M12 9v4M12 17h.01"/></symbol>
+</svg>
+
+<div class="row">
+<!-- ========== A ========== -->
+<div class="col"><h3>A. Нативный</h3>
+<div class="phone a"><div class="scroll">
+  <div class="date">Суббота, 19 сентября</div>
+  <h1>Сегодня</h1>
+  <div class="group"><div class="item">
+    <div class="ico" style="background:#ff3b30"><svg class="i"><use href="#alert"/></svg></div>
+    <div class="grow"><div>40 отжиманий до 20:00</div><div class="sub">Штраф за ночь на 18 сентября</div></div>
+    <button class="btn">Готово</button>
+  </div></div>
+
+  <div class="sec">Сон</div>
+  <div class="group"><div class="item" style="align-items:flex-start">
+    <div class="ico" style="background:#5e5ce6"><svg class="i"><use href="#moon"/></svg></div>
+    <div class="grow">
+      <div class="val">7<small>ч</small>48<small>м</small></div>
+      <div class="sub">23:02 → 07:01 · глубокий 1 ч 10 м · REM 1 ч 45 м</div>
+    </div>
+    <div class="tag">В режиме</div>
+  </div></div>
+
+  <div class="sec">Добавки с обедом</div>
+  <div class="group">
+    <div class="item"><div class="ico" style="background:#ff9500"><svg class="i"><use href="#pill"/></svg></div><div class="grow">Омега-3<div class="sub">Хватит на 24 дня</div></div><div class="check on"><svg class="i"><use href="#check"/></svg></div></div>
+    <div class="item"><div class="ico" style="background:#ff9500"><svg class="i"><use href="#pill"/></svg></div><div class="grow">D3<div class="sub warn">Хватит на 4 дня</div></div><div class="check"></div></div>
+    <div class="item"><div class="ico" style="background:#ff9500"><svg class="i"><use href="#pill"/></svg></div><div class="grow">Цинк<div class="sub">Пропуск</div></div><div class="check off"><svg class="i"><use href="#x"/></svg></div></div>
+  </div>
+
+  <div class="sec">Траты</div>
+  <div class="group">
+    <div class="item"><div class="ico" style="background:#34c759"><svg class="i"><use href="#wallet"/></svg></div><div class="grow">Обед<div class="sub">12:40</div></div><div>35 ¥</div></div>
+    <div class="item"><div class="ico" style="background:#34c759"><svg class="i"><use href="#wallet"/></svg></div><div class="grow">Такси<div class="sub">09:10</div></div><div>18 ¥</div></div>
+  </div>
+</div>
+<div class="tabs">
+  <div class="tab on"><svg class="i"><use href="#cal"/></svg>Сегодня</div>
+  <div class="tab"><svg class="i"><use href="#moon"/></svg>Сон</div>
+  <div class="tab"><svg class="i"><use href="#wallet"/></svg>Финансы</div>
+  <div class="tab"><svg class="i"><use href="#book"/></svg>Учёба</div>
+  <div class="tab"><svg class="i"><use href="#sliders"/></svg>Настройки</div>
+</div></div></div>
+
+<!-- ========== B ========== -->
+<div class="col"><h3>B. Приборная панель</h3>
+<div class="phone b"><div class="scroll">
+  <div class="top">
+    <div><div class="date">Сб, 19 сентября</div><h1>Сегодня</h1></div>
+    <div class="streak"><b>3</b>ночи подряд</div>
+  </div>
+  <div class="panel alert" style="display:flex;align-items:center;gap:12px">
+    <svg class="i" style="color:#ff5a4f"><use href="#alert"/></svg>
+    <div class="grow"><div style="font-weight:600">40 отжиманий до 20:00</div><div class="dim">Штраф за ночь на 18.09</div></div>
+    <button class="btn">Готово</button>
+  </div>
+  <div class="panel">
+    <div class="label"><span>Сон</span><span class="ok">В режиме</span></div>
+    <div class="num">7<span>ч</span>48<span>м</span></div>
+    <div class="meter"><i style="width:97%"></i></div>
+    <div class="kv"><span>Отбой <b>23:02</b></span><span>Подъём <b>07:01</b></span><span>Глуб. <b>1:10</b></span><span>REM <b>1:45</b></span></div>
+  </div>
+  <div class="panel">
+    <div class="label"><span>Добавки · обед</span><span>1 / 3</span></div>
+    <div style="margin-top:6px">
+      <div class="line"><div class="box on"><svg class="i"><use href="#check"/></svg></div><div class="grow">Омега-3</div><span class="dim">24 дн.</span></div>
+      <div class="line"><div class="box"></div><div class="grow">D3</div><span class="dim" style="color:#f5b942">4 дн.</span></div>
+      <div class="line"><div class="box off"><svg class="i"><use href="#x"/></svg></div><div class="grow">Цинк</div><span class="dim">пропуск</span></div>
+    </div>
+  </div>
+  <div class="panel">
+    <div class="label"><span>Траты</span><span>53 ¥</span></div>
+    <div style="margin-top:6px">
+      <div class="line"><div class="grow">Обед <span class="dim">12:40</span></div><span class="amt">35 ¥</span></div>
+      <div class="line"><div class="grow">Такси <span class="dim">09:10</span></div><span class="amt">18 ¥</span></div>
+    </div>
+  </div>
+</div>
+<div class="tabs">
+  <div class="tab on"><svg class="i"><use href="#cal"/></svg>Сегодня</div>
+  <div class="tab"><svg class="i"><use href="#moon"/></svg>Сон</div>
+  <div class="tab"><svg class="i"><use href="#wallet"/></svg>Финансы</div>
+  <div class="tab"><svg class="i"><use href="#book"/></svg>Учёба</div>
+  <div class="tab"><svg class="i"><use href="#sliders"/></svg>Настройки</div>
+</div></div></div>
+
+<!-- ========== C ========== -->
+<div class="col"><h3>C. Бумага</h3>
+<div class="phone c"><div class="scroll">
+  <div class="date">Суббота, 19 сентября</div>
+  <h1>Сегодня</h1>
+  <p class="lead">Третья ночь подряд в режиме.</p>
+  <div class="note"><span>Долг: 40 отжиманий до 20:00</span><button class="btn">Готово</button></div>
+
+  <h2><svg class="i"><use href="#moon"/></svg>Сон</h2>
+  <div class="rule"></div>
+  <div class="ln" style="align-items:flex-end">
+    <div class="grow"><div class="big">7<span>ч</span>48<span>м</span></div><div class="muted" style="margin-top:6px">23:02 → 07:01, глубокий 1 ч 10 м, REM 1 ч 45 м</div></div>
+    <span class="good">В режиме</span>
+  </div>
+
+  <h2><svg class="i"><use href="#pill"/></svg>Добавки с обедом</h2>
+  <div class="rule"></div>
+  <div class="ln"><div class="cb on"><svg class="i"><use href="#check"/></svg></div><div class="grow">Омега-3</div><span class="muted">24 дня</span></div>
+  <div class="ln"><div class="cb"></div><div class="grow">D3</div><span class="muted warn">4 дня</span></div>
+  <div class="ln"><div class="cb off"><svg class="i"><use href="#x"/></svg></div><div class="grow">Цинк</div><span class="muted">пропуск</span></div>
+
+  <h2><svg class="i"><use href="#wallet"/></svg>Траты, 53 ¥</h2>
+  <div class="rule"></div>
+  <div class="ln"><div class="grow">Обед <span class="muted">12:40</span></div><span>35 ¥</span></div>
+  <div class="ln"><div class="grow">Такси <span class="muted">09:10</span></div><span>18 ¥</span></div>
+</div>
+<div class="tabs">
+  <div class="tab on"><svg class="i"><use href="#cal"/></svg>Сегодня</div>
+  <div class="tab"><svg class="i"><use href="#moon"/></svg>Сон</div>
+  <div class="tab"><svg class="i"><use href="#wallet"/></svg>Финансы</div>
+  <div class="tab"><svg class="i"><use href="#book"/></svg>Учёба</div>
+  <div class="tab"><svg class="i"><use href="#sliders"/></svg>Настройки</div>
+</div></div></div>
+</div>
+</body>
+</html>
