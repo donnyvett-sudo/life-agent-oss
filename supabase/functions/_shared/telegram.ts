@@ -33,6 +33,15 @@ export async function send(chatId: number, text: string, keyboard?: Keyboard) {
   return msg.message_id;
 }
 
+/** Удалить сообщение бота (например, с показанным токеном). Ошибки не критичны. */
+export async function deleteMessage(chatId: number, messageId: number) {
+  try {
+    await call("deleteMessage", { chat_id: chatId, message_id: messageId });
+  } catch (e) {
+    console.warn(String(e));
+  }
+}
+
 /** Переслать фото по file_id: доказательство обещания уходит другу. */
 export async function sendPhoto(chatId: number, fileId: string, caption: string, keyboard?: Keyboard) {
   const msg = await call<{ message_id: number }>("sendPhoto", {

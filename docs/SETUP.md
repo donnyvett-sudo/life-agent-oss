@@ -57,3 +57,14 @@ run in the Supabase SQL editor: `delete from public.users;` (everything cascades
 ## Defaults you may want to change
 - Base currency is USD, per-user in the app (Settings). Internally amounts are also stored in CNY for analytics.
 - New users get timezone `Asia/Shanghai` and no supplements: set both in the app (Settings).
+
+## Access tokens
+Clients other than Telegram (iPhone Shortcuts, scripts, a desktop app) authenticate with a personal token in the
+`X-Token` header. Tokens are stored only as SHA-256, each has a label and a scope, and can be revoked:
+
+- `/tokens` lists them (never the values), `/newtoken <label> [app|study|ingest|*]` creates one (the message with the
+  value deletes itself after a minute), `/revoke <label>` revokes it.
+- Scopes: `app` (the Mini App API), `study` (study sync), `ingest` (iPhone Shortcuts, health check), `*` (everything).
+- The token created for you at sign-up keeps working as label `legacy` with every scope. Prefer a separate token per client.
+- `?token=` in the URL still works but is deprecated (the response carries a `Deprecation` header); use the header.
+- 20 failed attempts from one address within 10 minutes are answered with 429.

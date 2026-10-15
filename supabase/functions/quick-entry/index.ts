@@ -1,6 +1,7 @@
 // Быстрая запись с iPhone: «Команды» диктуют фразу и шлют её сюда. Авторизация — личный токен (X-Token).
 // Ответ {reply} Shortcuts показывает уведомлением; запись с кнопками приходит и в Telegram.
 import { check, db, type User, userCurrency } from "../_shared/db.ts";
+import { authRequest, flagQueryToken } from "../_shared/tokens.ts";
 import { logEntry } from "../_shared/moneybot.ts";
 import { t } from "../_shared/i18n.ts";
 import { type Currency, isLunch } from "../_shared/parse.ts";
@@ -12,14 +13,11 @@ import { localNow } from "../_shared/time.ts";
 
 const json = (body: unknown, status = 200) => Response.json(body, { status });
 
-Deno.serve(async (req) => {
+Deno.serve(flagQueryToken(async (req) => {
   if (req.method !== "POST") return json({ ok: false, reply: "POST only" }, 405);
-  const token = req.headers.get("x-token") ?? new URL(req.url).searchParams.get("token");
-  if (!token || token.length < 32) return json({ ok: false, reply: "Нет токена" }, 401);
-  const user = check(
-    await db.from("users").select("*").eq("ingest_token", token).eq("is_allowed", true).maybeSingle(),
-  ) as User | null;
-  if (!user) return json({ ok: false, reply: "Неверный токен" }, 401);
+  const auth = await authRequest(req, "ingest");
+  if ("error" in auth) return auth.error;
+  const user = auth.user;
 
   const raw = await req.text();
   let text = raw;
@@ -72,4 +70,4 @@ Deno.serve(async (req) => {
     console.error("quick-entry", e);
     return json({ ok: false, reply: t(user, "Не записалось, ошибка на сервере. Попробуй ещё раз.") }, 500);
   }
-});
+}));

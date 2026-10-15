@@ -3,7 +3,7 @@
 // будущие занятия из Study Agent, которых больше нет в его файлах, удаляются.
 import { nextIntroOrder } from "../_shared/cards.ts";
 import { check, db, type User } from "../_shared/db.ts";
-import { findByToken } from "../_shared/users.ts";
+import { authRequest } from "../_shared/tokens.ts";
 
 const json = (body: unknown, status = 200) => Response.json(body, { status });
 
@@ -16,8 +16,9 @@ const list = (v: unknown): Item[] => (Array.isArray(v) ? v.slice(0, 2000) : []);
 
 Deno.serve(async (req) => {
   if (req.method !== "POST") return json({ error: "POST only" }, 405);
-  const user = await findByToken(req.headers.get("x-token"));
-  if (!user) return json({ error: "unauthorized" }, 401);
+  const auth = await authRequest(req, "study");
+  if ("error" in auth) return auth.error;
+  const user = auth.user;
 
   const body = await req.json().catch(() => null) as Item | null;
   if (!body) return json({ error: "bad json" }, 400);

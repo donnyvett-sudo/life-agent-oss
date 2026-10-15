@@ -53,6 +53,7 @@ import { coachReply } from "../_shared/chat.ts";
 import { confirmAgent, undoAgent } from "../_shared/agent.ts";
 import { moneyAnswer } from "../_shared/spend.ts";
 import { subsOverview } from "../_shared/subs.ts";
+import { issueToken, listTokens, revokeToken, SCOPES } from "../_shared/tokens.ts";
 import { lastSeasonReview, monthReview } from "../_shared/review.ts";
 import { lang, type Lang, langFromLocale, t } from "../_shared/i18n.ts";
 import { limitText, takeAi } from "../_shared/quota.ts";
@@ -78,6 +79,7 @@ import {
   setKeyboard,
   setupChat,
   typing,
+  deleteMessage,
 } from "../_shared/telegram.ts";
 import { addMin, dayBounds, fmtDuration, localNow, shiftDate } from "../_shared/time.ts";
 import { parseManualSleep } from "../_shared/sleep.ts";
@@ -129,6 +131,7 @@ const HELP = [
   "• /today — добавки за сегодня",
   "• /sleep — последняя ночь; <code>/sleep 00:10 08:40</code> — записать ночь руками",
   "• /shortcut — настройка передачи сна с iPhone",
+  "• /tokens, /newtoken, /revoke — личные токены доступа",
   "• /export — копия всех данных файлом; <code>/export csv</code> — операции таблицей",
   "• /delete — удалить аккаунт и все данные",
   "• /help — эта справка",
@@ -237,6 +240,15 @@ async function onMessage(msg: TgMessage) {
     const args = text.slice("/sleep".length).trim();
     const msgs = args ? await manualSleep(user, args) : await lastSleep(user);
     for (const m of msgs) await send(msg.chat.id, m.text, m.keyboard);
+    return;
+  }
+  const cmd = text.split(/\s+/)[0].split("@")[0];
+  if (cmd === "/tokens") {
+    await send(msg.chat.id, await tokensText(user));
+    return;
+  }
+  if (cmd === "/newtoken" || cmd === "/revoke") {
+    await tokenCommand(user, msg.chat.id, cmd, text.split(/\s+/).slice(1));
     return;
   }
   if (text.startsWith("/shortcut")) {
@@ -801,6 +813,60 @@ async function manualSleep(user: User, args: string): Promise<Outgoing[]> {
   return [{ text: [head, ...ev.lines].join("\n") }, ...ev.extras];
 }
 
+const LABEL_RE = /^[A-Za-z0-9_-]{1,24}$/;
+
+async function tokensText(user: User): Promise<string> {
+  const rows = await listTokens(user.id) as unknown as {
+    label: string;
+    scopes: string[];
+    last_used_at: string | null;
+    revoked_at: string | null;
+  }[];
+  if (!rows.length) return t(user, "Токенов нет. Создать: /newtoken метка [app|study|ingest|*]");
+  const lines = rows.map((r) => {
+    const used = r.last_used_at ? r.last_used_at.slice(0, 16).replace("T", " ") + " UTC" : t(user, "не использовался");
+    const state = r.revoked_at ? " · " + t(user, "отозван") : "";
+    return `• <code>${r.label}</code> · ${r.scopes.join(",")} · ${used}${state}`;
+  });
+  return [t(user, "<b>Токены доступа</b> (значений здесь не показываю)"), ...lines, "",
+    t(user, "Новый: /newtoken метка [app|study|ingest|*] · отозвать: /revoke метка")].join("\n");
+}
+
+async function tokenCommand(user: User, chatId: number, cmd: string, args: string[]) {
+  const label = args[0] ?? "";
+  if (!LABEL_RE.test(label)) {
+    await send(chatId, t(user, "Метка: латиница, цифры, - и _, до 24 символов. Например: /newtoken desk app"));
+    return;
+  }
+  if (cmd === "/revoke") {
+    const ok = await revokeToken(user.id, label);
+    await send(chatId, ok ? t(user, "Токен «{label}» отозван.", { label }) : t(user, "Активного токена «{label}» нет.", { label }));
+    return;
+  }
+  const scope = args[1] ?? "app";
+  if (!SCOPES.includes(scope)) {
+    await send(chatId, t(user, "Доступ: app (приложение), study (синхронизация учёбы), ingest (Команды iPhone) или *."));
+    return;
+  }
+  let token: string;
+  try {
+    token = await issueToken(user.id, label, [scope]);
+  } catch {
+    await send(chatId, t(user, "Метка «{label}» уже занята (в том числе отозванным токеном). Выбери другую.", { label }));
+    return;
+  }
+  const id = await send(chatId, [
+    t(user, "<b>Новый токен «{label}»</b> ({scope}). Показываю один раз:", { label, scope }),
+    `<code>${token}</code>`,
+    t(user, "Скопируй сейчас: сообщение удалится через минуту. Токен — как пароль."),
+  ].join("\n"));
+  // The message with the value goes away on its own (the webhook invocation is kept alive for it).
+  background(async () => {
+    await new Promise((r) => setTimeout(r, 60_000));
+    await deleteMessage(chatId, id);
+  });
+}
+
 function shortcutHelp(user: User): string {
   const base = `${Deno.env.get("SUPABASE_URL")}/functions/v1`;
   return [
@@ -822,5 +888,6 @@ function shortcutHelp(user: User): string {
     t(user, "Инструкция: docs/shortcut-body.md"),
     "",
     t(user, "⚠️ Токен — как пароль, никому не пересылай."),
+    t(user, "Для новых команд лучше отдельный токен: /newtoken метка ingest (список: /tokens, отозвать: /revoke)."),
   ].join("\n");
 }

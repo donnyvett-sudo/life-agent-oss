@@ -596,6 +596,29 @@ export const EN: Record<string, string> = {
   "• /help — эта справка": "• /help — this help",
   "• всё остальное — разговор с коучем": "• anything else is a conversation with the coach",
   "<b>Только у тебя</b>": "<b>Owner only</b>",
+  "• /tokens, /newtoken, /revoke — личные токены доступа":
+    "• /tokens, /newtoken, /revoke — personal access tokens",
+  "Токенов нет. Создать: /newtoken метка [app|study|ingest|*]":
+    "No tokens yet. Create one: /newtoken label [app|study|ingest|*]",
+  "не использовался": "never used",
+  "отозван": "revoked",
+  "<b>Токены доступа</b> (значений здесь не показываю)": "<b>Access tokens</b> (values are never shown here)",
+  "Новый: /newtoken метка [app|study|ingest|*] · отозвать: /revoke метка":
+    "New: /newtoken label [app|study|ingest|*] · revoke: /revoke label",
+  "Метка: латиница, цифры, - и _, до 24 символов. Например: /newtoken desk app":
+    "Label: Latin letters, digits, - and _, up to 24 characters. For example: /newtoken desk app",
+  "Токен «{label}» отозван.": "Token “{label}” revoked.",
+  "Активного токена «{label}» нет.": "There is no active token “{label}”.",
+  "Доступ: app (приложение), study (синхронизация учёбы), ingest (Команды iPhone) или *.":
+    "Scope: app (the app), study (study sync), ingest (iPhone Shortcuts) or *.",
+  "Метка «{label}» уже занята (в том числе отозванным токеном). Выбери другую.":
+    "The label “{label}” is taken (also by a revoked token). Pick another.",
+  "<b>Новый токен «{label}»</b> ({scope}). Показываю один раз:":
+    "<b>New token “{label}”</b> ({scope}). Shown once:",
+  "Скопируй сейчас: сообщение удалится через минуту. Токен — как пароль.":
+    "Copy it now: this message deletes itself in a minute. A token is like a password.",
+  "Для новых команд лучше отдельный токен: /newtoken метка ingest (список: /tokens, отозвать: /revoke).":
+    "For new shortcuts use a separate token: /newtoken label ingest (list: /tokens, revoke: /revoke).",
   "• /invite — ссылка-приглашение на одного человека":
     "• /invite — an invitation link for one person",
   "• /friends — кто зашёл, отключить или отозвать ссылку":

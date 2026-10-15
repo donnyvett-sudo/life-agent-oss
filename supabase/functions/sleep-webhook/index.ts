@@ -2,22 +2,19 @@
 // (users.ingest_token) в заголовке X-Token (или ?token=).
 import { claimEvent, getSleep, lateSleepMessages, reevaluateNight, say, sleepLine } from "../_shared/coach.ts";
 import { check, db, type User } from "../_shared/db.ts";
+import { authRequest, flagQueryToken } from "../_shared/tokens.ts";
 import { t } from "../_shared/i18n.ts";
 import { mainNights, parseSamples, type SleepSummary, summarizeAll } from "../_shared/sleep.ts";
 import { fmtDuration, fmtTime, isQuiet, localNow } from "../_shared/time.ts";
 
 const json = (body: unknown, status = 200) => Response.json(body, { status });
 
-Deno.serve(async (req) => {
+Deno.serve(flagQueryToken(async (req) => {
   if (req.method !== "POST") return json({ ok: false, error: "POST only" }, 405);
 
-  const token = req.headers.get("x-token") ?? new URL(req.url).searchParams.get("token");
-  if (!token || token.length < 32) return json({ ok: false, error: "unauthorized" }, 401);
-  const user = check(
-    await db.from("users").select("*").eq("ingest_token", token).eq("is_allowed", true)
-      .maybeSingle(),
-  ) as User | null;
-  if (!user) return json({ ok: false, error: "unauthorized" }, 401);
+  const auth = await authRequest(req, "ingest");
+  if ("error" in auth) return auth.error;
+  const user = auth.user;
 
   // Shortcuts может прислать JSON ({samples} / {text}) или просто текст.
   const raw = await req.text();
@@ -120,4 +117,4 @@ Deno.serve(async (req) => {
         wake: fmtTime(sum.wake_at, user.tz),
       }),
   });
-});
+}));
