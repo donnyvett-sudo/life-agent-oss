@@ -11,15 +11,15 @@
   --line-strong: #cfc6b6;
   --tint: #efe8db;
   --text: #1f1d1a;
-  --muted: #857d70;
-  --accent: #b0553a;
-  --accent-soft: rgba(176, 85, 58, 0.14);
+  --muted: #6f685c;
+  --accent: #a34a30;
+  --accent-soft: rgba(163, 74, 48, 0.14);
   --on-accent: #fffdf8;
   --ink-btn: #1f1d1a;
   --on-ink: #fffdf8;
-  --good: #3f7d4e;
-  --warn: #a8661a;
-  --bad: #b8432f;
+  --good: #37703f;
+  --warn: #8f5c10;
+  --bad: #a83a28;
   --shadow: 0 1px 0 rgba(31, 29, 26, 0.04);
   color-scheme: light;
 }
@@ -38,7 +38,7 @@
   --on-ink: #151411;
   --good: #82b98d;
   --warn: #d9a24f;
-  --bad: #e0705a;
+  --bad: #e0715a;
   --shadow: none;
   color-scheme: dark;
 }
@@ -310,3 +310,11 @@ body.desk .tabbar { display: none; }
 .chart .bar.over { fill: var(--warn); }
 .chart .avg-line { fill: none; stroke: var(--accent); stroke-width: 2; stroke-linejoin: round; }
 .chart .raw-dot { fill: var(--muted); fill-opacity: 0.6; }
+
+/* Life Desk (macOS app): denser, system font, visible keyboard focus. Set by main.tsx via window.__LIFE_DESK__. */
+html.desk body { font: 14px/1.4 -apple-system, "SF Pro Text", system-ui, sans-serif; }
+html.desk #root > * { max-width: 780px; margin-inline: auto; }
+html.desk .mono { font-family: ui-monospace, "SF Mono", monospace; }
+html.desk button:hover, html.desk [role="button"]:hover { filter: brightness(0.97); }
+html.desk :focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 6px; }
+@media (prefers-reduced-motion: reduce) { html.desk * { animation: none !important; transition: none !important; } }

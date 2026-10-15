@@ -10,6 +10,7 @@ import { webApp } from "./tg";
 import { initTheme } from "./theme";
 
 initTheme();
+if ((window as unknown as { __LIFE_DESK__?: boolean }).__LIFE_DESK__) document.documentElement.classList.add("desk");
 webApp?.ready();
 webApp?.expand();
 
